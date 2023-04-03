@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
-
+from django.urls import reverse
 
 class Category(MPTTModel):
     name = models.CharField(max_length=100)
@@ -33,9 +33,16 @@ class Post(models.Model):
     category = models.ForeignKey(Category,related_name='post',on_delete=models.SET_NULL,null=True)
     tags = models.ManyToManyField(Tag,related_name='post')
     create_at = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(max_length=200,default='')
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse("post_single",kwargs={"slug":self.category.slug,"post_slug": self.slug})
+    
+    def get_recipe(self):
+        return self.recipe.all()
 
     
 
