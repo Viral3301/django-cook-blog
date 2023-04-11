@@ -3,6 +3,8 @@ from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 from django.urls import reverse
 from ckeditor.fields import RichTextField
+from django.utils import timezone
+
 
 class Category(MPTTModel):
     name = models.CharField(max_length=100)
@@ -59,6 +61,7 @@ class Recipe(models.Model):
 class Comment(models.Model):
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=100)
-    website = models.CharField(max_length=150)
+    website = models.CharField(max_length=150,blank=True,null=True)
     message = models.TextField(max_length=500)
+    create_at = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey(Post,related_name='comment',on_delete=models.CASCADE)
