@@ -3,10 +3,17 @@ from blog.models import Category, Post
 
 register = template.Library()
 
+def get_all_categories():
+    return Category.objects.all()
+
+@register.simple_tag()
+def get_list_categories():
+    return get_all_categories()
+
 
 @register.inclusion_tag('blog/include/tags/top_menu.html')
 def get_categories():
-    category = Category.objects.all()
+    category = get_list_categories()
     return {'list_category' : category}
 
 @register.inclusion_tag('blog/include/tags/recipes_tags.html')

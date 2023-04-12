@@ -2,6 +2,7 @@
 from django.views.generic import ListView, DetailView,CreateView
 from .models import Post, Comment
 from .forms import CommentForm
+from django.urls import reverse_lazy
 # Create your views here.
 
 
@@ -32,9 +33,10 @@ class HomeView(ListView):
 class CreateComment(CreateView):
     model = Comment
     form_class = CommentForm
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        form.instance.post_id = self.get('pk')
+        form.instance.post_id = self.kwargs.get('pk')
         self.object = form.save()
         return super().form_valid(form)
     

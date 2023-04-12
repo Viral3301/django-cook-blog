@@ -47,6 +47,8 @@ class Post(models.Model):
     def get_recipe(self):
         return self.recipe.all()
 
+    def get_comment(self):
+        return self.comment.all()
     
 
 class Recipe(models.Model):
@@ -65,3 +67,5 @@ class Comment(models.Model):
     message = models.TextField(max_length=500)
     create_at = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey(Post,related_name='comment',on_delete=models.CASCADE)
+
+
