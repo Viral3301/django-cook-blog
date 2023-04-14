@@ -1,5 +1,6 @@
-{% load static %}
+{% load static cache %}
 
+{% cache 5000 footer %}
 <footer class="footer">
     <div class="container-fluid">
         <div class="footer__instagram">
@@ -61,3 +62,4 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </div>
 </footer>
+{% endcache %}
